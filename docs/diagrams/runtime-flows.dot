@@ -1,0 +1,81 @@
+digraph G {
+  graph [
+    rankdir=LR,
+    bgcolor="white",
+    pad="0.35",
+    nodesep="0.65",
+    ranksep="0.8",
+    splines=ortho,
+    fontname="Arial",
+    fontsize=18,
+    labeljust="l",
+    labelloc="t"
+  ];
+  node [
+    shape=rect,
+    style="rounded,filled",
+    fontname="Arial",
+    fontsize=13,
+    margin="0.14,0.10",
+    color="#1F4E79",
+    penwidth=1.4,
+    fillcolor="#F7FBFF"
+  ];
+  edge [
+    color="#375A7F",
+    arrowsize=0.8,
+    penwidth=1.3,
+    fontname="Arial",
+    fontsize=11
+  ];
+
+  graph [rankdir=TB, label="Primary Runtime Workflows"];
+  node [shape=rect];
+
+  subgraph cluster_bullets {
+    label="Bullets";
+    color="#B7C9DA";
+    style="rounded";
+    B1 [label="User sends chat message"];
+    B2 [label="BulletChatState\nupdates session memory"];
+    B3 [label="GPTIntegration\nchat completion"];
+    B4 [label="Bullet preview\nformat controls"];
+    B5 [label="Insert formatted text boxes\ninto current slide", fillcolor="#EAF7EA"];
+    B1 -> B2 -> B3 -> B4 -> B5;
+  }
+
+  subgraph cluster_images {
+    label="Images";
+    color="#B7C9DA";
+    style="rounded";
+    I1 [label="Prompt or base image"];
+    I2 [label="Image generation / edit request"];
+    I3 [label="ImageAsset stored\nParentId / RootId lineage"];
+    I4 [label="Preview + history gallery"];
+    I5 [label="Insert image into slide", fillcolor="#EAF7EA"];
+    I1 -> I2 -> I3 -> I4 -> I5;
+  }
+
+  subgraph cluster_charts {
+    label="Charts and diagrams";
+    color="#B7C9DA";
+    style="rounded";
+    C1 [label="Natural language or raw DSL"];
+    C2 [label="Optional GPT\nproduces DSL/spec"];
+    C3 [label="Kroki renders\nPNG/SVG output"];
+    C4 [label="Preview / insert diagram", fillcolor="#EAF7EA"];
+    C1 -> C2 -> C3 -> C4;
+  }
+
+  subgraph cluster_analysis {
+    label="Image analysis";
+    color="#B7C9DA";
+    style="rounded";
+    A1 [label="Upload image + prompt"];
+    A2 [label="base64 data URL\nmultimodal chat request"];
+    A3 [label="Vision-capable GPT model"];
+    A4 [label="Analysis result"];
+    A5 [label="Optional bullets\ninsert into slide", fillcolor="#EAF7EA"];
+    A1 -> A2 -> A3 -> A4 -> A5;
+  }
+}

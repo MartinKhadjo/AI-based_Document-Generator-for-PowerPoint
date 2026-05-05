@@ -1,0 +1,1 @@
+AI-powered VSTO add-in for Microsoft PowerPoint that generates bullets, images, charts and analysis in a custom task pane with Azure OpenAI/OpenAI integration, DPAPI key storage, model verification and ClickOnce/Inno deployment.

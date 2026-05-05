@@ -1,0 +1,101 @@
+digraph G {
+  graph [
+    rankdir=TB,
+    bgcolor="white",
+    pad="0.35",
+    nodesep="0.45",
+    ranksep="0.65",
+    splines=polyline,
+    fontname="Arial",
+    fontsize=20,
+    label="AI-based Document Generator for PowerPoint - Component Architecture",
+    labelloc="t",
+    labeljust="l"
+  ];
+  node [
+    shape=rect,
+    style="rounded,filled",
+    fontname="Arial",
+    fontsize=13,
+    margin="0.14,0.10",
+    color="#1F4E79",
+    penwidth=1.4,
+    fillcolor="#F7FBFF"
+  ];
+  edge [
+    color="#375A7F",
+    arrowsize=0.8,
+    penwidth=1.2,
+    fontname="Arial",
+    fontsize=11
+  ];
+
+  subgraph cluster_host {
+    label="1. Office host and add-in bootstrap";
+    color="#B7C9DA"; fillcolor="#F4F8FB"; style="rounded,filled";
+    PowerPoint [label="Microsoft PowerPoint\n+ VSTO Runtime", fillcolor="#E8F1FA"];
+    ThisAddIn [label="ThisAddIn\n- VSTO startup\n- TLS 1.2 enforcement\n- Custom task pane creation", fillcolor="#E8F1FA"];
+    CustomTaskPane [label="CustomTaskPane\nDocument Generator surface", fillcolor="#E8F1FA"];
+    {rank=same; PowerPoint; ThisAddIn; CustomTaskPane;}
+  }
+
+  subgraph cluster_ui {
+    label="2. User-facing PowerPoint task pane";
+    color="#B7C9DA"; fillcolor="#F4F8FB"; style="rounded,filled";
+    Pane [label="DocumentGeneratorPane\nWinForms UI + PowerPoint COM interop", fillcolor="#EAF4FF"];
+    Bullets [label="Bullets tab\nchat + formatted slide bullets"];
+    Images [label="Images tab\ngenerate, edit, history gallery"];
+    Charts [label="Charts tab\nVega-Lite + diagram DSL via Kroki"];
+    Analysis [label="Analysis tab\nGPT vision + bullet extraction"];
+    {rank=same; Bullets; Images; Charts; Analysis;}
+  }
+
+  subgraph cluster_core {
+    label="3. Core application services";
+    color="#B7C9DA"; fillcolor="#F4F8FB"; style="rounded,filled";
+    GPT [label="GPTIntegration\ncentral AI facade\nchat | image | vision | chart DSL", fillcolor="#F0F7FF"];
+    ConfigForm [label="ConfigurationForm\nprovider selection + test connection", fillcolor="#FFF9E8"];
+    ConfigStore [label="ConfigurationStore\nDPAPI-encrypted settings\n%LocalAppData%", fillcolor="#FFF9E8"];
+    Session [label="SessionManager\nper-presentation session isolation", fillcolor="#F8F0FF"];
+    Memory [label="BulletChatState / TextMemoryState\n40-message sliding window"];
+    ImageAsset [label="ImageAsset\nimage bytes + lineage + response ID"];
+    {rank=same; GPT; ConfigForm; ConfigStore; Session;}
+    {rank=same; Memory; ImageAsset;}
+  }
+
+  subgraph cluster_verification {
+    label="4. Provider discovery and model verification";
+    color="#B7C9DA"; fillcolor="#F4F8FB"; style="rounded,filled";
+    AzureList [label="AzureDeploymentListClient\nGET /openai/deployments\nmulti-version retry"];
+    OpenAIList [label="OpenAIModelListClient\nGET /v1/models\npurpose filtering"];
+    Verifier [label="ModelAccessVerifier\nminimal chat ping\n3 concurrent candidates", fillcolor="#EAF4FF"];
+    {rank=same; AzureList; OpenAIList; Verifier;}
+  }
+
+  subgraph cluster_external {
+    label="5. External HTTPS services";
+    color="#B7C9DA"; fillcolor="#F4F8FB"; style="rounded,filled";
+    Azure [label="Azure OpenAI\nchat | image | vision", fillcolor="#ECF8EF"];
+    OpenAI [label="OpenAI Direct\nchat | image | vision | responses", fillcolor="#ECF8EF"];
+    Kroki [label="Kroki renderer\nVega-Lite | Mermaid | D2 | PlantUML | Graphviz", fillcolor="#ECF8EF"];
+    {rank=same; Azure; OpenAI; Kroki;}
+  }
+
+  PowerPoint -> ThisAddIn -> CustomTaskPane -> Pane;
+  Pane -> Bullets; Pane -> Images; Pane -> Charts; Pane -> Analysis;
+  Bullets -> GPT; Images -> GPT; Charts -> GPT; Analysis -> GPT;
+  Charts -> Kroki;
+  Pane -> ConfigForm;
+  ConfigForm -> ConfigStore;
+  GPT -> ConfigStore;
+  Pane -> Session;
+  Session -> Memory;
+  Session -> ImageAsset;
+  ConfigForm -> AzureList;
+  ConfigForm -> OpenAIList;
+  AzureList -> Verifier;
+  OpenAIList -> Verifier;
+  Verifier -> GPT;
+  GPT -> Azure;
+  GPT -> OpenAI;
+}

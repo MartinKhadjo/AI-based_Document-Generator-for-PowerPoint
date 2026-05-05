@@ -1,0 +1,52 @@
+digraph G {
+  graph [
+    rankdir=LR,
+    bgcolor="white",
+    pad="0.35",
+    nodesep="0.65",
+    ranksep="0.8",
+    splines=ortho,
+    fontname="Arial",
+    fontsize=18,
+    labeljust="l",
+    labelloc="t"
+  ];
+  node [
+    shape=rect,
+    style="rounded,filled",
+    fontname="Arial",
+    fontsize=13,
+    margin="0.14,0.10",
+    color="#1F4E79",
+    penwidth=1.4,
+    fillcolor="#F7FBFF"
+  ];
+  edge [
+    color="#375A7F",
+    arrowsize=0.8,
+    penwidth=1.3,
+    fontname="Arial",
+    fontsize=11
+  ];
+
+  graph [rankdir=TB, label="Build and Deployment Flow"];
+  node [shape=rect];
+
+  Source [label="Visual Studio solution\nMyComAddInProject.sln", fillcolor="#F7FBFF"];
+  Build [label="Release build\nVSTO add-in + PemApiConfigurationTool"];
+  Publish [label="Visual Studio Publish\nClickOnce package"];
+  Payload [label="setup.exe + Application Files\n+ manifest"];
+  InnoDecision [label="Use Inno Setup wrapper?", shape=diamond, fillcolor="#FFF7E6"];
+  Inno [label="Inno Setup bootstrapper\nProgram Files payload\nStart Menu shortcuts", fillcolor="#FFF9E8"];
+  Install [label="User installs per-user\nClickOnce setup"];
+  Trust [label="Publisher trust / IT allowlist\nfor corporate environments"];
+  PowerPoint [label="Start PowerPoint\nDocument Generator task pane appears", fillcolor="#EAF7EA"];
+  Config [label="Configure API keys\nPowerPoint task pane or desktop tool"];
+  Ready [label="Ready for AI-assisted slide authoring", fillcolor="#EAF7EA"];
+
+  Source -> Build -> Publish -> Payload -> InnoDecision;
+  InnoDecision -> Inno [label="yes"];
+  InnoDecision -> Install [label="no"];
+  Inno -> Install;
+  Install -> Trust -> PowerPoint -> Config -> Ready;
+}

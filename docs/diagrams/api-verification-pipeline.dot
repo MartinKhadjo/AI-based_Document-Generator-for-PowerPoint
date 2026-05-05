@@ -1,0 +1,63 @@
+digraph G {
+  graph [
+    rankdir=LR,
+    bgcolor="white",
+    pad="0.35",
+    nodesep="0.65",
+    ranksep="0.8",
+    splines=ortho,
+    fontname="Arial",
+    fontsize=18,
+    labeljust="l",
+    labelloc="t"
+  ];
+  node [
+    shape=rect,
+    style="rounded,filled",
+    fontname="Arial",
+    fontsize=13,
+    margin="0.14,0.10",
+    color="#1F4E79",
+    penwidth=1.4,
+    fillcolor="#F7FBFF"
+  ];
+  edge [
+    color="#375A7F",
+    arrowsize=0.8,
+    penwidth=1.3,
+    fontname="Arial",
+    fontsize=11
+  ];
+
+  graph [rankdir=TB, label="Model and Deployment Verification Pipeline"];
+  node [shape=rect];
+
+  Start [label="User clicks\nLoad deployments / Load models", fillcolor="#EAF4FF"];
+  Provider [label="Provider selected\nAzure OpenAI or OpenAI Direct"];
+  Azure [label="AzureDeploymentListClient\nGET /openai/deployments\nAPI-version fallback", fillcolor="#F7FBFF"];
+  OpenAI [label="OpenAIModelListClient\nGET /v1/models\nBearer token auth", fillcolor="#F7FBFF"];
+  Parse [label="Normalize and parse results\nAzure: data/value arrays\nOpenAI: model IDs"];
+  Filter [label="Filter by tab purpose\nChat/Analysis | Image | General"];
+  Decision [label="Chat-capable tab?", shape=diamond, fillcolor="#FFF7E6"];
+  Verify [label="ModelAccessVerifier\nminimal chat completion ping\nSemaphoreSlim(3)", fillcolor="#EAF4FF"];
+  ImageSkip [label="Image-only models\nskip chat ping\nvalidate via Test Connection", fillcolor="#FFF9E8"];
+  Dropdown [label="Show verified candidates\nin configuration dropdown", fillcolor="#EAF7EA"];
+  Test [label="User-triggered Test Connection\nmodel GET / chat / image fallback", fillcolor="#EAF7EA"];
+  Errors [label="Clear error handling\n401/403 no retry\n400/404/429 Azure fallback\nnetwork errors shown to UI", fillcolor="#FDECEC"];
+
+  Start -> Provider;
+  Provider -> Azure [label="Azure"];
+  Provider -> OpenAI [label="OpenAI"];
+  Azure -> Parse;
+  OpenAI -> Parse;
+  Parse -> Filter;
+  Filter -> Decision;
+  Decision -> Verify [label="yes"];
+  Decision -> ImageSkip [label="image only"];
+  Verify -> Dropdown [label="success"];
+  ImageSkip -> Dropdown;
+  Dropdown -> Test;
+  Azure -> Errors [style=dashed, label="auth/rate/API issues"];
+  OpenAI -> Errors [style=dashed, label="auth/network issues"];
+  Verify -> Errors [style=dashed, label="failed ping"];
+}
