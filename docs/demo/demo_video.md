@@ -1,14 +1,14 @@
-﻿# Demo Video
+# Demo Video
 
 This repository does not include the original demo video file because large video assets should not be committed directly to Git. Instead, the product walkthrough is published as a public-safe YouTube demo and linked from the repository.
 
 ## Watch the Demo
 
-[![Watch the AI-based Document Generator for PowerPoint demo](https://img.youtube.com/vi/GFLJRD3qUVg/hqdefault.jpg)](https://www.youtube.com/watch?v=GFLJRD3qUVg&t=206s)
+[![Watch the AI-based Document Generator for PowerPoint demo](https://img.youtube.com/vi/GFLJRD3qUVg/hqdefault.jpg)](https://www.youtube.com/watch?v=GFLJRD3qUVg&t=5s)
 
-**Direct link:** [https://www.youtube.com/watch?v=GFLJRD3qUVg&t=206s](https://www.youtube.com/watch?v=GFLJRD3qUVg&t=206s)
+**Direct link:** [https://www.youtube.com/watch?v=GFLJRD3qUVg&t=5s](https://www.youtube.com/watch?v=GFLJRD3qUVg&t=5s)
 
-## What the demo shows
+## What the Demo Shows
 
 The video demonstrates the AI-based Document Generator for PowerPoint as a public-safe product walkthrough. It is intended for recruiters, engineering managers and technical reviewers who want to understand the workflow and product value without accessing proprietary source code.
 
@@ -20,7 +20,7 @@ The walkthrough can be used to evaluate:
 - practical product usability;
 - the project's maturity as a software-engineering portfolio item.
 
-## Why the video is linked instead of committed
+## Why the Video Is Linked Instead of Committed
 
 The original video file is too large for a normal Git repository and would make the repository unnecessarily heavy. Keeping the video on YouTube and linking it here is the recommended portfolio approach because it:
 
