@@ -7,6 +7,12 @@
 [![VSTO](https://img.shields.io/badge/VSTO-COM%20Add--in-darkblue)](#)
 [![Status](https://img.shields.io/badge/status-proprietary%20showcase-orange)](#)
 
+## Demo
+
+[Watch the public-safe PowerPoint Document Generator walkthrough on YouTube](https://www.youtube.com/watch?v=GFLJRD3qUVg&t=5s)
+
+[![Watch the AI-based Document Generator for PowerPoint demo](https://img.youtube.com/vi/GFLJRD3qUVg/hqdefault.jpg)](https://www.youtube.com/watch?v=GFLJRD3qUVg&t=5s)
+
 ## Product preview
 
 ![PowerPoint task pane of the AI-based Document Generator showing the Office-native AI authoring workflow](docs/assets/document-generator-task-pane-screenshot.png)
