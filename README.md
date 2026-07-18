@@ -7,6 +7,21 @@
 [![VSTO](https://img.shields.io/badge/VSTO-COM%20Add--in-darkblue)](#)
 [![Status](https://img.shields.io/badge/status-proprietary%20showcase-orange)](#)
 
+## Product preview
+
+![PowerPoint task pane of the AI-based Document Generator showing the Office-native AI authoring workflow](docs/assets/document-generator-task-pane-screenshot.png)
+
+## Quick links
+
+| Topic | Link |
+|---|---|
+| Demo video | [Watch the public-safe PowerPoint walkthrough](docs/demo/demo_video.md) |
+| Architecture | [Component architecture and provider routing](docs/architecture.md) |
+| User workflows | [Task-pane workflows](docs/user-workflows.md) |
+| Deployment | [ClickOnce and enterprise rollout notes](docs/deployment.md) |
+| Security and privacy | [Credential and public/private boundaries](docs/security-and-privacy.md) |
+| Portfolio evidence | [Software-engineering evidence](docs/portfolio-evidence.md) |
+
 ## Executive summary
 
 **Document Generator** is a PowerPoint VSTO COM add-in that brings AI-assisted presentation creation into a native Microsoft Office workflow. It provides a custom task pane with dedicated modules for bullet generation, image generation/editing, chart and diagram generation, and image analysis. The add-in supports Azure OpenAI and OpenAI Direct, uses a central AI integration facade, verifies model/deployment access before use, stores credentials with Windows DPAPI, and can be deployed through ClickOnce or an optional Inno Setup wrapper.
@@ -60,28 +75,43 @@ A central design goal is to avoid exposing non-working deployments to the user. 
 
 ```text
 .
-├── README.md
-├── CHANGELOG.md
-├── LICENSE.md
-├── NOTICE.md
-└── docs/
-    ├── architecture.md
-    ├── user-workflows.md
-    ├── security-and-privacy.md
-    ├── deployment.md
-    ├── portfolio-evidence.md
-    ├── assets/
-    │   ├── architecture-overview.svg
-    │   ├── api-verification-pipeline.svg
-    │   ├── runtime-flows.svg
-    │   └── deployment-flow.svg
-    └── diagrams/
-        ├── architecture-overview.dot
-        ├── api-verification-pipeline.dot
-        ├── runtime-flows.dot
-        └── deployment-flow.dot
+|-- README.md
+|-- CHANGELOG.md
+|-- LICENSE.md
+|-- MANIFEST.txt
+|-- NOTICE.md
+|-- docs/
+|   |-- architecture.md
+|   |-- user-workflows.md
+|   |-- security-and-privacy.md
+|   |-- deployment.md
+|   |-- portfolio-evidence.md
+|   |-- github-repository-description.txt
+|   |-- demo/
+|   |   `-- demo_video.md
+|   |-- assets/
+|   |   |-- README.md
+|   |   |-- document-generator-task-pane-screenshot.png
+|   |   |-- architecture-overview.svg
+|   |   |-- api-verification-pipeline.svg
+|   |   |-- runtime-flows.svg
+|   |   `-- deployment-flow.svg
+|   `-- diagrams/
+|       |-- architecture-overview.dot
+|       |-- api-verification-pipeline.dot
+|       |-- runtime-flows.dot
+|       `-- deployment-flow.dot
 ```
 
+## Public evidence assets
+
+| Asset | Purpose |
+|---|---|
+| `document-generator-task-pane-screenshot.png` | Public-safe product screenshot showing the PowerPoint task-pane workflow. |
+| `architecture-overview.svg` | Component architecture across PowerPoint, VSTO bootstrap, task pane, service facade, configuration and external providers. |
+| `api-verification-pipeline.svg` | Provider/model verification flow for Azure OpenAI and OpenAI Direct. |
+| `runtime-flows.svg` | User-facing runtime flows for bullets, image generation, charts/diagrams and image analysis. |
+| `deployment-flow.svg` | ClickOnce-first deployment and operational readiness flow. |
 ## What is intentionally not published
 
 To protect the proprietary value of the software, this repository does **not** publish:
